@@ -17,15 +17,15 @@ except Exception:  # pragma: no cover - allow tests without MCP installed
     Server = None
     stdio_server = None
 
-from video_generation.schemas import (
+from src.video_generation.schemas import (
     RequestPayload,
     ResponsePayload,
     VideoSegment,
     FailedSegment,
     ProviderMetadata,
 )
-from video_generation.grouping import group_frames_into_segments, to_segment_specs
-from providers.fal_ai import FalAIVideoClient
+from src.video_generation.grouping import group_frames_into_segments, to_segment_specs
+from src.providers.fal_ai import FalAIVideoClient
 
 
 SERVICE_NAME = "mcp-video-generation-service"
@@ -137,7 +137,11 @@ async def main() -> None:  # pragma: no cover
             return [types.TextContent(type="text", text=json.dumps({"success": False, "error": str(e)}))]  # type: ignore[attr-defined]
 
     async with stdio_server() as (read_stream, write_stream):  # type: ignore[misc]
-        await server.run(read_stream, write_stream)  # type: ignore[misc]
+        await server.run(
+            read_stream,
+            write_stream,
+            server.create_initialization_options()
+        )  # type: ignore[misc]
 
 
 if __name__ == "__main__":  # pragma: no cover

@@ -18,6 +18,8 @@ class Settings(BaseSettings):
     FAL_API_KEY: str = Field(..., description="FAL.ai API key")
     FAL_IMAGE_TO_VIDEO: str = Field(default="fal-ai/veo3/fast/image-to-video")
     FAL_TEXT_TO_VIDEO: str = Field(default="fal-ai/fast-sdxl")
+    FAL_TEXT_TO_IMAGE_MODEL: Optional[str] = Field(default=None)
+    FAL_IMAGE_TO_IMAGE_MODEL: Optional[str] = Field(default=None)
 
     # OpenRouter LLM Configuration
     OPENROUTER_API_KEY: Optional[str] = Field(default=None)
